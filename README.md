@@ -771,7 +771,7 @@ pip install -r requirements.txt
 
 Once the Streamlit interface is implemented:
 
-streamlit run app.py
+streamlit run frontend/app.py
 
 The exact run command should follow the project’s current implementation and final requirements.txt.
 

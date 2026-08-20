@@ -128,3 +128,64 @@ class ExperienceResult:
     status: ExperienceStatus
     evidence: Optional[str]
     explanation: str
+
+class ScoreMatchStatus(str, Enum):
+    MATCHED = "MATCHED"
+    PARTIAL = "PARTIAL"
+    MISSING = "MISSING"
+
+@dataclass
+class RequirementScore:
+    requirement: JDRequirement
+    status: ScoreMatchStatus
+    explanation: str
+    evidence_ref: Optional[str]
+    confidence: float
+
+@dataclass
+class ScoreResult:
+    candidate_id: Optional[str]
+    fit_score: float
+    confidence_score: float
+    matched_count: int
+    partial_count: int
+    missing_count: int
+    requirement_results: List[RequirementScore]
+    explanation: str
+
+@dataclass
+class CandidateRankingInput:
+    candidate_id: str
+    candidate_name: str
+    resume_version: int
+    is_current: bool
+    score_result: ScoreResult
+
+@dataclass
+class RankedCandidate:
+    rank: int
+    candidate_id: str
+    candidate_name: str
+    resume_version: int
+    fit_score: float
+    confidence_score: float
+    matched_count: int
+    partial_count: int
+    missing_count: int
+    high_matches: List[str]
+    partial_matches: List[str]
+    skill_gaps: List[str]
+    experience_match: str
+
+class DecisionValue(str, Enum):
+    PENDING = "PENDING"
+    ACCEPTED = "ACCEPTED"
+    REJECTED = "REJECTED"
+
+@dataclass
+class HumanDecision:
+    decision_id: str
+    candidate_id: str
+    resume_version_id: str
+    decision: DecisionValue
+    decided_at: float

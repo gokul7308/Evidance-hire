@@ -19,11 +19,19 @@ def init_db():
         version TEXT NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
+    
+    CREATE TABLE IF NOT EXISTS decisions (
+        decision_id TEXT PRIMARY KEY,
+        candidate_id TEXT NOT NULL,
+        resume_version_id TEXT NOT NULL,
+        decision TEXT NOT NULL,
+        decided_at REAL NOT NULL
+    );
     """
     
     with get_connection() as conn:
         cursor = conn.cursor()
-        cursor.execute(schema)
+        cursor.executescript(schema)
         
         # Insert a version record if not exists
         cursor.execute("SELECT COUNT(*) FROM system_info")
